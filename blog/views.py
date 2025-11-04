@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import BlogPost, Category, Tag
-from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserCreationForm
 from django.shortcuts import redirect
 
 from .forms import CommentForm
@@ -51,12 +51,12 @@ def blog_detail(request, slug):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('login')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
 def category_posts(request, slug=None):
@@ -115,7 +115,7 @@ def search_posts(request):
     query = request.GET.get('q')
     posts = BlogPost.objects.filter(
         Q(title__icontains=query) | Q(content__icontains=query)
-    ).order_by('-created_at') if query else BlogPost.objects.none()
+    ).order_by('-created_at')
 
     paginator = Paginator(posts, 6)
     page_number = request.GET.get('page')
