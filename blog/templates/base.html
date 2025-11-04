@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Blog{% endblock %}</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        :root {
+            --treegreen: #45cc5a;
+        }
+        .bg-treegreen {
+            background-color: var(--treegreen);
+        }
+        .text-treegreen {
+            color: var(--treegreen);
+        }
+        .neo-card {
+            border: 4px solid black;
+            box-shadow: 8px 8px 0 black;
+            transition: all 0.2s ease;
+        }
+        .neo-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0 var(--treegreen);
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            color: black;
+        }
+    </style>
+
+    {% block meta %}
+    <meta name="description" content="A Neo-Brutalist blog built with Django">
+    <meta property="og:title" content="My Blog">
+    <meta property="og:description" content="Fresh content, bold design.">
+    {% endblock %}
+</head>
+<body class="bg-white text-black">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-6 bg-treegreen border-b-4 border-black">
+        <h1 class="text-2xl font-extrabold uppercase text-black">My Blog</h1>
+        <div class="space-x-4">
+            <a href="/" class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition">Home</a>
+
+            {% if user.is_authenticated %}
+                <span class="text-black font-semibold">Hello, {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition">
+                        Logout
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition">Login</a>
+                <a href="{% url 'signup' %}" class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-6">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white text-center py-6 mt-16 border-t-4 border-treegreen">
+        <p>&copy; {{ now.year }} My Blog. Built with ❤️ in Django.</p>
+    </footer>
+</body>
+</html>

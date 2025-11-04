@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto neo-card p-6 bg-white mt-10">
+    <h1 class="text-3xl font-extrabold mb-4">Create Account</h1>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="px-4 py-2 bg-treegreen border-2 border-black text-black hover:bg-[#FFFF00] hover:text-treegreen transition">
+            Sign Up
+        </button>
+    </form>
+</div>
+{% endblock %}

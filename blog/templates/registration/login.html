@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto neo-card p-6 bg-white mt-10">
+    <h1 class="text-3xl font-extrabold mb-4">Login</h1>
+    {% if form.errors %}
+        <p class="text-red-600 mb-4">Invalid username or password</p>
+    {% endif %}
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label for="id_username" class="block font-bold">Username</label>
+            {{ form.username }}
+        </div>
+        <div>
+            <label for="id_password" class="block font-bold">Password</label>
+            {{ form.password }}
+        </div>
+        <button type="submit" class="px-4 py-2 bg-treegreen border-2 border-black text-black hover:bg-black hover:text-treegreen transition">
+            Login
+        </button>
+    </form>
+    <p class="mt-4">Don't have an account? <a href="{% url 'signup' %}" class="text-treegreen underline">Sign up</a></p>
+</div>
+{% endblock %}
