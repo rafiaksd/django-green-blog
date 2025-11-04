@@ -32,6 +32,20 @@
             background-color: white;
             color: black;
         }
+
+        /* --- Global content spacing --- */
+        p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Responsive images --- */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1rem 0; /* spacing above/below images */
+        }
     </style>
 
     {% block meta %}
@@ -42,9 +56,9 @@
 </head>
 <body class="bg-white text-black">
     <!-- Navbar -->
-    <nav class="flex justify-between items-center p-6 bg-treegreen border-b-4 border-black">
+    <nav class="flex flex-wrap justify-between items-center p-6 bg-treegreen border-b-4 border-black">
         <h1 class="text-2xl font-extrabold uppercase text-black">My Blog</h1>
-        <div class="space-x-4">
+        <div class="space-x-4 mt-4 sm:mt-0">
             <a href="/" class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition">Home</a>
 
             {% if user.is_authenticated %}

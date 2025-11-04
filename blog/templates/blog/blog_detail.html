@@ -21,7 +21,8 @@
     {% endif %}
 
     {% if blog_post.image %}
-      <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}" class="w-full h-auto mb-6 border-2 border-black">
+      <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}"
+          class="max-w-full h-auto mb-6 border-2 border-black block mx-auto">
     {% endif %}
 
     <div class="prose prose-lg max-w-none">
