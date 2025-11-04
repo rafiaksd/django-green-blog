@@ -27,12 +27,12 @@
     {% for category in categories %}
       {% if selected_category == category %}
         <a href="{% url 'category_posts' category.slug %}?deselect=1"
-          class="border-4 border-black px-4 py-2 font-semibold bg-treegreen text-black transition">
+           class="border-4 border-black px-4 py-2 font-semibold bg-treegreen text-black transition">
           {{ category.name }}
         </a>
       {% else %}
         <a href="{% url 'category_posts' category.slug %}"
-          class="border-4 border-black px-4 py-2 font-semibold bg-white text-black hover:bg-treegreen transition">
+           class="border-4 border-black px-4 py-2 font-semibold bg-white text-black hover:bg-treegreen transition">
           {{ category.name }}
         </a>
       {% endif %}
@@ -43,37 +43,43 @@
   <div class="flex flex-wrap justify-center gap-2 mb-10">
     {% for tag in tags %}
       {% if selected_tag == tag %}
-        <!-- Clicking again deselects -->
         <a href="{% url 'tag_posts' tag.slug %}?deselect=1"
-          class="inline-block border-2 border-black px-3 py-1 font-semibold text-sm bg-treegreen">
+           class="inline-block border-2 border-black px-3 py-1 font-semibold text-sm bg-treegreen">
           #{{ tag.name }}
         </a>
       {% else %}
         <a href="{% url 'tag_posts' tag.slug %}"
-          class="inline-block border-2 border-black px-3 py-1 font-semibold text-sm bg-white hover:bg-treegreen">
+           class="inline-block border-2 border-black px-3 py-1 font-semibold text-sm bg-white hover:bg-treegreen">
           #{{ tag.name }}
         </a>
       {% endif %}
     {% endfor %}
   </div>
 
-  <!-- Blog Posts -->
-  <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+  <!-- Blog Posts: Vertical Cards -->
+  <div class="flex flex-col gap-10">
     {% for post in page_obj %}
-      <div class="neo-card bg-white p-6 rounded-lg">
+      <div class="neo-card bg-white p-6 rounded-lg flex flex-col md:flex-row {% if forloop.counter|divisibleby:2 %}md:flex-row-reverse{% endif %} items-center gap-6">
+        
+        <!-- Image -->
         {% if post.image %}
-          <img src="{{ post.image.url }}" alt="{{ post.title }}"
-              class="max-w-full h-auto mb-4 border-2 border-black block mx-auto">
+          <div class="">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+          </div>
         {% endif %}
-        <h2 class="text-2xl font-bold mb-2 text-black">{{ post.title }}</h2>
-        {% if post.category %}
-          <p class="text-sm text-gray-600 mb-2">Category: <strong>{{ post.category.name }}</strong></p>
-        {% endif %}
-        <p class="text-gray-700 mb-4">{{ post.content|truncatewords:30|safe }}</p>
-        <a href="{% url 'blog_detail' post.slug %}"
-           class="inline-block px-4 py-2 bg-treegreen border-2 border-black text-black font-semibold hover:bg-black hover:text-treegreen transition">
-          Read More
-        </a>
+
+        <!-- Text -->
+        <div class="flex-1 text-left">
+          <h2 class="text-3xl font-bold mb-2 text-black">{{ post.title }}</h2>
+          {% if post.category %}
+            <p class="text-sm text-gray-600 mb-2">Category: <strong>{{ post.category.name }}</strong></p>
+          {% endif %}
+          <p class="text-gray-700 mb-4">{{ post.content|striptags|truncatewords:50 }}</p>
+          <a href="{% url 'blog_detail' post.slug %}"
+             class="inline-block px-4 py-2 bg-treegreen border-2 border-black text-black font-semibold hover:bg-black hover:text-treegreen transition">
+            Read More
+          </a>
+        </div>
       </div>
     {% empty %}
       <p class="text-center text-gray-500">No posts found.</p>
@@ -82,17 +88,16 @@
 
   <!-- Pagination -->
   {% if page_obj.has_other_pages %}
-  <div class="flex justify-center mt-10 space-x-2">
-    {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}" class="border-4 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">← Prev</a>
-    {% endif %}
-
-    <span class="px-4 py-2 border-4 border-black bg-treegreen text-black font-bold">{{ page_obj.number }}</span>
-
-    {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}" class="border-4 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Next →</a>
-    {% endif %}
-  </div>
+    <div class="flex justify-center mt-10 space-x-2">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="border-4 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">← Prev</a>
+      {% endif %}
+      <span class="px-4 py-2 border-4 border-black bg-treegreen text-black font-bold">{{ page_obj.number }}</span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="border-4 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Next →</a>
+      {% endif %}
+    </div>
   {% endif %}
+
 </div>
 {% endblock %}

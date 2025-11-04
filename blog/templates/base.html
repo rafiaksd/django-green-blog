@@ -39,12 +39,22 @@
             margin-bottom: 1rem;
         }
 
+        article a {
+            text-decoration: underline;
+            text-shadow: blue;
+            color:rgb(2, 187, 194);
+            font-weight: 700;
+        }
+
         /* --- Responsive images --- */
         img {
-            max-width: 100%;
-            height: auto;
             display: block;
-            margin: 1rem 0; /* spacing above/below images */
+            margin: 1rem auto; /* center images */
+            max-width: 90%;     /* 90% of container width */
+            max-height: 450px;  /* maximum height */
+            width: auto;
+            height: auto;
+            object-fit: cover;  /* cover while preserving aspect ratio */
         }
     </style>
 
