@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 
 # image resizing
 from PIL import Image
-from io import BytesIO
-from django.core.files.base import ContentFile
 
 # auto delete image if blog deleted
 import os

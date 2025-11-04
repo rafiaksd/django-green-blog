@@ -28,7 +28,15 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'blog',
     'ckeditor',
+    'oembed',
 ]
+
+OEmbed_PROVIDERS = {
+    'youtube': 'https://www.youtube.com/oembed',
+    'vimeo': 'https://vimeo.com/api/oembed',
+    'x': 'https://publish.twitter.com/oembed',
+    'facebook': 'https://graph.facebook.com/oembed_post',
+}
 
 SITE_ID = 1
 

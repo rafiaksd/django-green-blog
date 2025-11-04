@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 
+import re, html
+
 def blog_list(request):
     posts = BlogPost.objects.all().order_by('-created_at')
 
@@ -25,9 +27,57 @@ def blog_list(request):
         'tags': tags,
     })
 
+def embed_video(content):
+    """This function takes content and converts YouTube, Vimeo, X (Twitter) links inside <a> tags into iframe or blockquote embeds."""
+    
+    # Replace YouTube links inside <a> tags with iframe embed
+    content = re.sub(
+        r'<a href="https://www\.youtube\.com/watch\?v=([a-zA-Z0-9_-]+)"(.*)>(.*?)</a>',
+        r'<iframe width="800" height="450" src="https://www.youtube.com/embed/\1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+        content
+    )
+
+    # Replace Vimeo links inside <a> tags with iframe embed
+    content = re.sub(
+        r'<a href="https://vimeo\.com/(\d+)"(.*)>(.*?)</a>',
+        r'<iframe src="https://player.vimeo.com/video/\1" width="800" height="450" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>',
+        content
+    )
+
+    # Replace X (Twitter) links inside <a> tags with blockquote embed
+    content = re.sub(
+        r'<a href="https://x\.com/([a-zA-Z0-9_]+)/status/(\d+)"(.*)>(.*?)</a>',
+        r'<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a style="width: 200px; margin-left:auto; margin-right: auto;" href="https://twitter.com/\1/status/\2"></a></p></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
+        content
+    )
+
+    
+    # Print the content before Facebook processing
+    print(f"LAST TRY before FACEBOOK: ")
+    print(f"CURRENT CONTENT IS: {content}")
+    print()
+    print()
+
+    # Replace Facebook iframe links inside <a> tags with iframe embed
+    content = re.sub(
+        r'<a href="https://www\.facebook\.com/plugins/post\.php\?href=([^\"]+)"(.*)>(.*?)</a>',
+        r'<iframe src="https://www.facebook.com/plugins/post.php?href=\1" width="500" height="498" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" />',
+        content
+    )
+
+    content = html.unescape(content)
+
+    # Print the final content after processing
+    print(f"FINAL CONTENT AFTER FACEBOOK PROCESSING:\n\n {content}")
+
+    return content
+
 def blog_detail(request, slug):
     blog_post = get_object_or_404(BlogPost, slug=slug)
     comments = blog_post.comments.all().order_by('-created_at')
+
+    # Process the content to embed videos
+    blog_post.content = embed_video(blog_post.content)
 
     if request.method == 'POST':
         if request.user.is_authenticated:

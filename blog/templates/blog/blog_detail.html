@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}{{ blog_post.title }}{% endblock %}
 
 {% block content %}
@@ -31,10 +33,11 @@
   {% endif %}
 
   <div class="prose prose-lg max-w-none">
-    {% autoescape off %}{{ blog_post.content|safe }}{% endautoescape %}
+    {% autoescape off %} 
+      {{ blog_post.content|safe }}
+    {% endautoescape %}
   </div>
 </article>
-
 
 <!-- Comments -->
 <section class="max-w-5xl w-11/12 mx-auto mt-10 p-6 bg-white neo-card">
@@ -60,6 +63,5 @@
   {% empty %}
     <p class="text-gray-500">No comments yet.</p>
   {% endfor %}
-
 </section>
 {% endblock %}
