@@ -3,6 +3,14 @@ from django import forms
 from .models import BlogPost, Category, Tag, Comment
 from ckeditor.widgets import CKEditorWidget
 
+class CommentInline(admin.TabularInline):
+    model = Comment
+    extra = 0
+    readonly_fields = ('user', 'email_preview', 'created_at', 'content')
+
+    def email_preview(self, obj):
+        return obj.user.email
+
 # BlogPostForm to exclude slug from being manually edited
 class BlogPostForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget())
@@ -16,6 +24,7 @@ class BlogPostForm(forms.ModelForm):
 
 # BlogPostAdmin with the custom BlogPostForm
 class BlogPostAdmin(admin.ModelAdmin):
+    inlines = [CommentInline]
     form = BlogPostForm
     list_display = ('title', 'category', 'created_at', 'updated_at')
     search_fields = ('title', 'content')

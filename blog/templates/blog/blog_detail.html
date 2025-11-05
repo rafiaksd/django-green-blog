@@ -29,7 +29,7 @@
   </div>
 
 <article class="max-w-8xl w-11/12 md:w-full mx-auto p-6 bg-white neo-card">
-  <h1 class="blog_title text-5xl font-extrabold mb-2 text-black">{{ blog_post.title }}</h1>
+  <h1 class="blog_title text-3xl md:text-4xl font-extrabold text-black">{{ blog_post.title }}</h1>
   <p class="text-lg text-gray-600 -mt-8 mb-4">
     Published on {{ blog_post.created_at|date:"F j, Y" }}
     {% if blog_post.category %}

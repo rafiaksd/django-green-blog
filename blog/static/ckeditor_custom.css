@@ -1,0 +1,8 @@
+img {
+    max-height: 200px;  /* Limit image height in editor */
+    height: auto;
+    width: auto;
+    display: block;
+    margin: 10px auto;
+    object-fit: contain;
+}

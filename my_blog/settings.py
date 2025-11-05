@@ -87,10 +87,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CKEDITOR_CONFIGS = {
     'default': {
+        'height': 500,       # pixels (adjust as you wish)
+        'width': 'full',     # full width of the container
         'extraPlugins': 'image2',  # Image plugin should be included
         'filebrowserUploadUrl': '/ckeditor/upload/',
         'image2_alignClasses': ['align-center'],
         'image2_maxHeight': 600,
+        'contentsCss': [
+            '/static/ckeditor_custom.css',  # Custom CSS to limit image size
+        ],
     },
 }
 
