@@ -44,7 +44,7 @@ class BlogPost(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
     content = RichTextField()
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    #author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

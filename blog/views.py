@@ -9,7 +9,47 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 
-import re, html
+from django.conf import settings
+from django.http import JsonResponse
+from django.core.files.storage import default_storage
+import re, html, os
+from PIL import Image
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def upload_ckeditor_image(request):
+    """ Handle image upload from CKEditor """
+    if request.method == 'POST' and request.FILES.get('upload'):
+        image = request.FILES['upload']
+        path = default_storage.save(f"blog_images/{image.name}", image)
+
+        # Get the full file path where the image is saved
+        img_path = os.path.join(settings.MEDIA_ROOT, path)
+
+        try:
+            # Open the image to check its size
+            img = Image.open(img_path)
+            # Check if image size is greater than 1MB
+            if os.path.getsize(img_path) > 1024 * 1024:  # 1 MB
+                img.thumbnail((1200, 1200), Image.Resampling.LANCZOS)
+                img.save(img_path, optimize=True, quality=70)
+                print(f"Image {image.name} resized successfully")
+            else:
+                print(f"Image {image.name} is under 1MB, no resizing needed")
+        except Exception as e:
+            if os.path.exists(img_path):
+                os.remove(img_path)
+            print(f"Error during resizing: {e}")
+            pass
+
+        # Respond with the image URL
+        image_url = os.path.join(settings.MEDIA_URL, path)
+        return JsonResponse({
+            'uploaded': 1,
+            'fileName': image.name,
+            'url': image_url  # This URL is what CKEditor will use to display the image
+        })
+    return JsonResponse({'uploaded': 0, 'error': {'message': 'Image upload failed'}})
 
 def blog_list(request):
     posts = BlogPost.objects.all().order_by('-created_at')

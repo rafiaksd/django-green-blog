@@ -28,7 +28,7 @@
     </a>
   </div>
 
-<article class="max-w-5xl w-11/12 mx-auto p-6 bg-white neo-card mt-10">
+<article class="max-w-8xl w-11/12 mx-auto p-6 bg-white neo-card mt-10">
   <h1 class="text-5xl font-extrabold mb-6 text-black">{{ blog_post.title }}</h1>
   <p class="text-sm text-gray-600 mb-4">
     Published on {{ blog_post.created_at|date:"F j, Y" }}
@@ -64,7 +64,7 @@
 </article>
 
 <!-- Comments -->
-<section class="max-w-5xl w-11/12 mx-auto mt-10 p-6 bg-white neo-card">
+<section class="max-w-8xl w-11/12 mx-auto mt-10 p-6 bg-white neo-card">
   <h2 class="text-3xl font-bold mb-4">Comments</h2>
 
   {% if user.is_authenticated %}
