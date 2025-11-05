@@ -2,8 +2,6 @@ from pathlib import Path
 import os 
 from dotenv import load_dotenv
 
-#NGROK LETS GO
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -13,7 +11,15 @@ SECRET_KEY = secret_key
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+                '127.0.0.1', 'localhost',
+                 'nonesoterically-unvindicated-neida.ngrok-free.dev'
+                ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://nonesoterically-unvindicated-neida.ngrok-free.dev'
+]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,13 +32,6 @@ INSTALLED_APPS = [
     'blog',
     'ckeditor',
 ]
-
-OEmbed_PROVIDERS = {
-    'youtube': 'https://www.youtube.com/oembed',
-    'vimeo': 'https://vimeo.com/api/oembed',
-    'x': 'https://publish.twitter.com/oembed',
-    'facebook': 'https://graph.facebook.com/oembed_post',
-}
 
 SITE_ID = 1
 
@@ -76,22 +75,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-"""AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]"""
 
 AUTH_PASSWORD_VALIDATORS = []
 
