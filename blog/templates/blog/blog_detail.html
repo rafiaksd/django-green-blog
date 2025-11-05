@@ -29,12 +29,12 @@
   </div>
 
 <article class="max-w-8xl w-11/12 mx-auto p-6 bg-white neo-card mt-10">
-  <h1 class="text-5xl font-extrabold mb-6 text-black">{{ blog_post.title }}</h1>
-  <p class="text-sm text-gray-600 mb-4">
+  <h1 class="blog_title text-5xl font-extrabold mb-6 text-black">{{ blog_post.title }}</h1>
+  <p class="text-lg text-gray-600 mb-4">
     Published on {{ blog_post.created_at|date:"F j, Y" }}
     {% if blog_post.category %}
       • In 
-      <a href="{% url 'category_posts' blog_post.category.slug %}" class="font-semibold text-treegreen hover:text-black">
+      <a href="{% url 'category_posts' blog_post.category.slug %}" class="text-treegreen text-xl font-bold hover:text-black">
         {{ blog_post.category.name }}
       </a>
     {% endif %}
@@ -43,7 +43,7 @@
   {% if blog_post.tags.exists %}
     <div class="mb-6 flex flex-wrap gap-2">
       {% for tag in blog_post.tags.all %}
-        <a href="{% url 'tag_posts' tag.slug %}" class="inline-block px-2 py-1 border-2 border-black bg-treegreen text-black font-semibold hover:bg-black hover:text-treegreen transition">
+        <a href="{% url 'tag_posts' tag.slug %}" class="inline-block px-2 py-1 border-2 border-black bg-treegreen text-xl text-black font-semibold hover:bg-black hover:text-treegreen transition">
           #{{ tag.name }}
         </a>
       {% endfor %}
@@ -68,10 +68,10 @@
   <h2 class="text-3xl font-bold mb-4">Comments</h2>
 
   {% if user.is_authenticated %}
-    <form method="post" class="mb-6">
+    <form method="post" class="mb-10 text-xl">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit" class="px-4 py-2 bg-treegreen border-2 border-black text-black hover:bg-black hover:text-treegreen transition">
+      <button type="submit" class="text-xl px-4 py-2 bg-treegreen border-2 border-black font-semibold text-black hover:bg-black hover:text-treegreen transition round-lg">
         Post Comment
       </button>
     </form>
@@ -81,8 +81,8 @@
 
   {% for comment in comments %}
     <div class="border-2 border-black p-4 mb-4 bg-gray-50">
-      <p class="text-black"><strong>{{ comment.user.username }}</strong> — {{ comment.created_at|date:"M j, Y h:i A" }}</p>
-      <p class="mt-2">{{ comment.content }}</p>
+      <p class="text-black text-2xl"><strong>{{ comment.user.username }}</strong> — {{ comment.created_at|date:"M j, Y h:i A" }}</p>
+      <p class="mt-2 text-xl">{{ comment.content }}</p>
     </div>
   {% empty %}
     <p class="text-gray-500">No comments yet.</p>

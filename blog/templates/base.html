@@ -8,6 +8,10 @@
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+    <!-- Google Fonts: Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --treegreen: #45cc5a;
@@ -27,23 +31,76 @@
             transform: translate(-4px, -4px);
             box-shadow: 8px 8px 0 var(--treegreen);
         }
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: white;
-            color: black;
-        }
-
-        /* --- Global content spacing --- */
-        p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
 
         article .prose a {
             text-decoration: underline;
             text-shadow: blue;
             color:rgb(2, 187, 194);
             font-weight: 700;
+        }
+
+        article .blog_title{
+            font-size: 3.5rem;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; /* Default font for body */
+            line-height: 1.6; /* Improve line height for readability */
+            color: #333; /* Slightly darker text color */
+            background-color: #f9f9f9; /* Light background color */
+        }
+
+        article {
+            font-family: 'Roboto', sans-serif; /* Use Roboto for the blog article */
+            line-height: 1.75; /* Increase line height for better readability */
+            color: #222;
+        }
+
+        article h1, article h2, article h3, article h4, article h5, article h6 {
+            font-family: 'Inter', sans-serif; /* Use Inter for headings */
+            font-weight: 600; /* Make headings bolder */
+            color: #111; /* Darker color for headings */
+        }
+
+        article h1 {
+            font-size: 2.5rem; /* Heading 1 - large */
+        }
+
+        article h2 {
+            font-size: 2rem; /* Heading 2 */
+        }
+
+        article h3 {
+            font-size: 1.8rem; /* Heading 3 */
+        }
+
+        article h4 {
+            font-size: 1.6rem; /* Heading 4 */
+        }
+
+        article h5 {
+            font-size: 1.5rem; /* Heading 5 */
+        }
+
+        article h6 {
+            font-size: 1.35rem; /* Heading 6 - small */
+        }
+
+        .prose p {
+            font-size: 1.35rem; /* Default paragraph size */
+            margin-bottom: 1.25rem; /* Space between paragraphs */
+            line-height: 1.7; /* Improved line spacing */
+        }
+
+        .prose div {
+            font-size: 1.35rem;
+        }
+
+        .prose img {
+            max-width: 100%; /* Make images responsive */
+            height: auto; /* Maintain aspect ratio */
+            display: block;
+            margin: 20px auto; /* Center the images */
         }
 
         /* --- Responsive images --- */
