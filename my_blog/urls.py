@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('6bbf656add837374cXy/admin/', admin.site.urls),
+    #path('6bbf656add837374cXy/admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', include('blog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),  # login/logout
     path('accounts/', include('blog.user_urls')),            # signup

@@ -3,7 +3,6 @@ from django import forms
 from .models import BlogPost, Category, Tag, Comment
 from ckeditor.widgets import CKEditorWidget
 
-
 # BlogPostForm to exclude slug from being manually edited
 class BlogPostForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget())
@@ -22,7 +21,7 @@ class BlogPostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     list_filter = ('category', 'tags')
     #readonly_fields = ('slug',)  # Make slug field read-only
-
+    
 
 # CategoryForm to prevent slug field from being edited
 class CategoryForm(forms.ModelForm):
