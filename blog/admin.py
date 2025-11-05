@@ -11,7 +11,7 @@ class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = '__all__'
-        exclude = ['author'] #author for now is only one, so ignore
+        exclude = ['author'] #inteded author for now is ONLY ONE, so IGNORING FOR NOW
         #exclude = ['slug']
 
 
