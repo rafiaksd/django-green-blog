@@ -93,10 +93,10 @@ def embed_video(content):
 
     
     # Print the content before Facebook processing
-    print(f"LAST TRY before FACEBOOK: ")
-    print(f"CURRENT CONTENT IS: {content}")
-    print()
-    print()
+    #print(f"LAST TRY before FACEBOOK: ")
+    #print(f"CURRENT CONTENT IS: {content}")
+    #print()
+    #print()
 
     # Replace Facebook iframe links inside <a> tags with iframe embed
     content = re.sub(
@@ -108,7 +108,7 @@ def embed_video(content):
     content = html.unescape(content)
 
     # Print the final content after processing
-    print(f"FINAL CONTENT AFTER FACEBOOK PROCESSING:\n\n {content}")
+    #print(f"FINAL CONTENT AFTER FACEBOOK PROCESSING:\n\n {content}")
 
     return content
 
