@@ -1,9 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Blog{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/pg_icon.jpg' %}" type="image/jpg">
 
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -15,6 +19,10 @@
     <style>
         :root {
             --treegreen: #45cc5a;
+        }
+        .user-name {
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+            font-size: 1.5rem;
         }
         .bg-treegreen {
             background-color: var(--treegreen);
@@ -134,8 +142,11 @@
         <div class="space-x-4 mt-4 sm:mt-0">
             <a href="/" class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition">Home</a>
 
+            <!-- New About button -->
+            <a href="{% url 'about' %}" class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition">About</a>
+
             {% if user.is_authenticated %}
-                <span class="text-black font-semibold">Hello, {{ user.username }}</span>
+                <span class="user-name text-black font-semibold uppercase">{{ user.username }}</span>
                 <form action="{% url 'logout' %}" method="post" class="inline">
                     {% csrf_token %}
                     <button type="submit" class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition">

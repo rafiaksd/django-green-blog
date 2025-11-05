@@ -220,3 +220,6 @@ def search_posts(request):
         'tags': tags,
         'search_query': query,
     })
+
+def about(request):
+    return render(request, 'pages/about.html')

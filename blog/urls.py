@@ -9,4 +9,5 @@ urlpatterns = [
     path('search/', views.search_posts, name='search_posts'),
     path('post/<slug:slug>/', views.blog_detail, name='blog_detail'),
     path('ckeditor/upload/', upload_ckeditor_image, name='ckeditor-upload'),
+    path('about/', views.about, name='about'),
 ]
