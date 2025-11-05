@@ -42,8 +42,9 @@
 
   {% if blog_post.tags.exists %}
     <div class="mb-6 flex flex-wrap gap-2">
+      <button class="italic text-xl">Tags: </button>
       {% for tag in blog_post.tags.all %}
-        <a href="{% url 'tag_posts' tag.slug %}" class="inline-block px-2 py-1 border-2 border-black bg-treegreen text-xl text-black font-semibold hover:bg-black hover:text-treegreen transition">
+        <a href="{% url 'tag_posts' tag.slug %}" class="inline-block px-2 py-1 border-2 border-black bg-treegreen text-sm md:text-xl text-black hover:bg-black hover:text-treegreen transition">
           #{{ tag.name }}
         </a>
       {% endfor %}

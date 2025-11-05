@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-secret_path= os.getenv('SECRET_PATH')
+SECRET_ADMIN_PATH= os.getenv('SECRET_ADMIN_PATH')
 
 urlpatterns = [
-    path(f'{secret_path}/admin/', admin.site.urls),
+    path(f'{SECRET_ADMIN_PATH}/admin/', admin.site.urls),
     path('', include('blog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),  # login/logout
     path('accounts/', include('blog.user_urls')),            # signup

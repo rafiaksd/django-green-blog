@@ -2,7 +2,7 @@
 {% block title %}Blog{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-6 py-10">
+<div class="container mx-auto px-4 py-8">
 
   <h1 class="text-5xl font-extrabold text-center mb-10 uppercase">Blog</h1>
 
@@ -23,16 +23,16 @@
   </form>
 
   <!-- Category Filter -->
-  <div class="flex flex-wrap justify-center gap-3 mb-10">
+  <div class="flex flex-wrap justify-center gap-3 mb-8 uppercase">
     {% for category in categories %}
       {% if selected_category == category %}
-        <a href="{% url 'category_posts' category.slug %}?deselect=1"
-           class="border-2 border-black text-2xl px-4 py-2 font-semibold bg-treegreen text-black transition rounded-lg">
+        <a href="{% url 'blog_list' %}"
+           class="border-2 border-black text-sm md:text-2xl px-4 py-2 font-semibold bg-treegreen text-black transition rounded-lg">
           {{ category.name }}
         </a>
       {% else %}
         <a href="{% url 'category_posts' category.slug %}"
-           class="border-2 border-black text-2xl px-4 py-2 font-semibold bg-white text-black hover:bg-treegreen transition rounded-lg">
+           class="border-2 border-black text-sm md:text-2xl px-4 py-2 font-semibold bg-white text-black hover:bg-treegreen transition rounded-lg">
           {{ category.name }}
         </a>
       {% endif %}
@@ -40,16 +40,16 @@
   </div>
 
   <!-- Tag Filter -->
-  <div class="flex flex-wrap justify-center gap-2 mb-10">
+  <div class="flex flex-wrap justify-center gap-2 mb-8">
     {% for tag in tags %}
       {% if selected_tag == tag %}
-        <a href="{% url 'tag_posts' tag.slug %}?deselect=1"
-           class="inline-block border-2 border-black px-3 py-1 font-semibold text-sm bg-treegreen rounded-md">
+        <a href="{% url 'blog_list' %}"
+           class="inline-block border-2 border-black px-3 py-1 font-semibold text-xs md:text-sm bg-treegreen rounded-md">
           #{{ tag.name }}
         </a>
       {% else %}
         <a href="{% url 'tag_posts' tag.slug %}"
-           class="inline-block border-2 border-black px-3 py-1 font-semibold text-sm bg-white hover:bg-treegreen rounded-md">
+           class="inline-block border-2 border-black px-3 py-1 font-semibold text-xs md:text-sm bg-white hover:bg-treegreen rounded-md">
           #{{ tag.name }}
         </a>
       {% endif %}
@@ -73,7 +73,7 @@
   <!-- Blog Posts: Vertical Cards -->
   <div class="flex flex-col gap-10">
     {% for post in page_obj %}
-      <div class="neo-card bg-white p-6 rounded-lg flex flex-col md:flex-row {% if forloop.counter|divisibleby:2 %}md:flex-row-reverse{% endif %} items-center gap-6">
+      <div class="neo-card bg-white p-6 rounded-lg flex flex-col xl:flex-row {% if forloop.counter|divisibleby:2 %}xl:flex-row-reverse{% endif %} items-center gap-6">
         
         <!-- Image -->
         {% if post.image %}
@@ -97,7 +97,7 @@
             </p>
           {% endif %}
           
-          <p class="text-gray-700 text-xl mb-4">{{ post.content|striptags|truncatewords:50|safe }}</p>
+          <p class="text-gray-700 text-md md:text-xl line-clamp-6 md:line-clamp-8 mb-4">{{ post.content|striptags|truncatewords:100|safe }}</p>
           <a href="{% url 'blog_detail' post.slug %}"
             class="inline-block px-4 py-2 bg-treegreen border-2 border-black text-black font-medium hover:bg-black hover:text-treegreen transition">
             Read More

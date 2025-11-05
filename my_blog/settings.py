@@ -6,18 +6,15 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
-secret_key = os.getenv('SECRET_KEY')
-SECRET_KEY = secret_key
+SECRET_KEY = os.getenv('SECRET_KEY')
+URL_PATH = os.getenv('URL_PATH')
 
 DEBUG = True
 
-ALLOWED_HOSTS = [
-                '127.0.0.1', 'localhost',
-                 'nonesoterically-unvindicated-neida.ngrok-free.dev'
-                ]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', URL_PATH]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://nonesoterically-unvindicated-neida.ngrok-free.dev'
+    f'https://{URL_PATH}'
 ]
 
 
