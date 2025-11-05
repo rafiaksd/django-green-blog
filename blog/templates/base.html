@@ -22,7 +22,7 @@
         }
         .user-name {
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-            font-size: 1.5rem;
+            font-size: 1.5em;
         }
         .bg-treegreen {
             background-color: var(--treegreen);
@@ -31,8 +31,8 @@
             color: var(--treegreen);
         }
         .neo-card {
-            border: 3px solid black;
-            box-shadow: 5px 5px 0 black;
+            border: 2px solid black;
+            box-shadow: 2px 2px 0 black;
             transition: all 0.2s ease;
         }
         .neo-card:hover {
@@ -48,7 +48,7 @@
         }
 
         article .blog_title{
-            font-size: 3.5rem;
+            font-size: 3.5em;
         }
 
         body {
@@ -68,48 +68,48 @@
             font-family: 'Inter', sans-serif; /* Use Inter for headings */
             font-weight: 600; /* Make headings bolder */
             color: #111; /* Darker color for headings */
-            margin-bottom: 1rem;
+            margin-bottom: 1em;
             line-height: 1.1; 
         }
 
         article h1 {
-            font-size: 2.2rem; /* Heading 1 - large */
+            font-size: 2.2em; /* Heading 1 - large */
         }
 
         article h2 {
-            font-size: 2rem; /* Heading 2 */
+            font-size: 2em; /* Heading 2 */
         }
 
         article h3 {
-            font-size: 1.8rem; /* Heading 3 */
+            font-size: 1.8em; /* Heading 3 */
         }
 
         article h4 {
-            font-size: 1.6rem; /* Heading 4 */
+            font-size: 1.6em; /* Heading 4 */
         }
 
         article h5 {
-            font-size: 1.5rem; /* Heading 5 */
+            font-size: 1.5em; /* Heading 5 */
         }
 
         article h6 {
-            font-size: 1.35rem; /* Heading 6 - small */
+            font-size: 1.35em; /* Heading 6 - small */
         }
 
         .prose p {
-            font-size: 1.1rem; /* Default paragraph size */
-            margin-bottom: 1.25rem; 
+            font-size: 1.1em; /* Default paragraph size */
+            margin-bottom: 1.25em; 
             line-height: 1.4; /* Improved line spacing */
         }
 
         @media (min-width: 768px) {
             .prose p {
-                font-size: 1.35rem;
+                font-size: 1.35em;
             }
         }
 
         .prose div {
-            font-size: 1.35rem;
+            font-size: 1.35em;
         }
 
         .prose img {
@@ -122,7 +122,7 @@
         /* --- Responsive images --- */
         img {
             display: block;
-            margin: 1rem auto; /* center images */
+            margin: 1em auto; /* center images */
             max-width: 90%;     /* 90% of container width */
             max-height: 450px;  /* maximum height */
             width: auto;
@@ -145,19 +145,19 @@
 </head>
 <body class="bg-white text-black">
         <!-- Navbar -->
-        <nav class="flex flex-col md:flex-row md:justify-between md:items-center p-6 bg-treegreen border-b-4 border-black">
+        <nav class="flex flex-col md:flex-row md:justify-between md:items-center p-2 md:p-4 bg-treegreen border-b-4 border-black">
             <!-- Left -->
-            <h1 class="text-4xl font-extrabold uppercase text-black text-center md:text-left mr-2 mb-4 md:mb-0">
+            <h1 class="text-3xl md:text-4xl font-extrabold uppercase text-black text-center md:text-left mr-2 mb-0 md:mb-0">
                 My Blog
             </h1>
 
             <!-- Right -->
-            <div class="grid grid-cols-2 gap-2 md:flex md:space-x-4 md:justify-end">
-                <a href="/" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center">
-                Home
+            <div class="text-xs md:text-lg grid grid-cols-2 gap-1 md:flex md:space-x-2 md:justify-end">
+                <a href="/" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
+                Blogs
                 </a>
 
-                <a href="{% url 'about' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center">
+                <a href="{% url 'about' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
                 About
                 </a>
 
@@ -169,16 +169,16 @@
 
                 <form action="{% url 'logout' %}" method="post" class="inline min-w-[120px]">
                     {% csrf_token %}
-                    <button type="submit" class="w-full md:w-auto px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition">
+                    <button type="submit" class="w-full md:w-auto px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition rounded-lg">
                     Logout
                     </button>
                 </form>
                 {% else %}
-                <a href="{% url 'login' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center">
+                <a href="{% url 'login' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
                     Login
                 </a>
 
-                <a href="{% url 'signup' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center">
+                <a href="{% url 'signup' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
                     Sign Up
                 </a>
                 {% endif %}
@@ -188,7 +188,7 @@
 
 
 
-    <div class="container mx-auto p-6">
+    <div class="container mx-auto p-2 md:p-6">
         {% block content %}{% endblock %}
     </div>
 
