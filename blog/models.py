@@ -13,6 +13,8 @@ from django.conf import settings
 import re
 from urllib.parse import urlparse
 
+from PIL import Image
+
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True, blank=True)
@@ -91,11 +93,12 @@ class BlogPost(models.Model):
 
             if old_image_path and old_image_path != new_image_path:
                 if not BlogPost.objects.filter(image=old_image_path).exclude(pk=self.pk).exists():
-                    print(f"💀 OLD IMAGE NOT being USED, DELETING: {old_image_path}")
+                    print(f"💀 OLD BLOG IMAGE NOT being USED, DELETING: {old_image_path}")
                     original.image.delete(save=False)
                 else:
                     posts_using_old_image = BlogPost.objects.filter(image=old_image_path).exclude(pk=self.pk)
-                    print(f"OLD IMAGE is BEING USED by: {[post.title for post in posts_using_old_image]}")
+                    print(f"OLD BLOG IMAGE is BEING USED by: {[post.title for post in posts_using_old_image]}")
+            
 
             # --- Handle CKEditor images ---
             old_images = set(get_images_from_content(original.content))
@@ -113,6 +116,31 @@ class BlogPost(models.Model):
 
         super().save(*args, **kwargs)
 
+        # after everything updated, 
+        # now check wether self.image is greater than 1 mb
+
+        try:
+            if self.image:
+                img_path = self.image.path
+                img = Image.open(img_path)
+
+                # Check image size in bytes
+                if self.image.size > 1024 * 1024:  # 1 MB
+                    # Resize proportionally
+                    max_width = 1200  # optional: max width to avoid huge images
+                    max_height = 1200
+
+                    img.thumbnail((max_width, max_height), Image.Resampling.LANCZOS)
+
+                    # Save back, overwrite original
+                    img.save(img_path, optimize=True, quality=70)
+
+                    print(f"📷✅😮 BLOG IMAGE: {img_path} resized properly")
+                else:
+                    print(f"📷 BLOG Image: {img_path} is under 1MB, no resizing needed")
+        except Exception as e:
+            print(f"FAILED to RESIZE BLOG IMAGE: {img_path}, reason: {e}")
+
     
     def __str__(self):
         return self.title
@@ -121,9 +149,26 @@ class BlogPost(models.Model):
 # Signal to delete image file when BlogPost is deleted
 @receiver(post_delete, sender=BlogPost)
 def delete_blog_image(sender, instance, **kwargs):
-    if instance.image:
-        if os.path.isfile(instance.image.path):
-            os.remove(instance.image.path)
+    try:
+        if instance.image: #if the blog has a main_image
+            if os.path.isfile(instance.image.path):
+                print(f"🏀💥🗑️ IMAGE {instance.image.path}: DELETED as BLOG is DELETED")
+                os.remove(instance.image.path)
+
+        # --- Handle CKEditor images ---
+        unused_images_in_CKEDITOR = set(get_images_from_content(instance.content))
+
+        if len(unused_images_in_CKEDITOR) > 0:
+            for img in unused_images_in_CKEDITOR:
+                full_path = os.path.join(settings.MEDIA_ROOT, img)
+                if os.path.exists(full_path):
+                    print(f"💀💥🗑️ AFTER DELETE BLOG: CKEditor image not used, deleting: {img}")
+                    os.remove(full_path)
+        else:
+            print(f"0️⃣0️⃣0️⃣ There are NO IMAGES LEFT in CKEDITOR")
+        
+    except Exception as e:
+        print(f"ERROR trying to DELETE unused photos, after deleting blog, due to: {e}")
 
 class Comment(models.Model):
     post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='comments')

@@ -33,9 +33,9 @@ def upload_ckeditor_image(request):
             if os.path.getsize(img_path) > 1024 * 1024:  # 1 MB
                 img.thumbnail((1200, 1200), Image.Resampling.LANCZOS)
                 img.save(img_path, optimize=True, quality=70)
-                print(f"Image {image.name} resized successfully")
+                print(f"📷✅ CKEDITOR Image {image.name} resized successfully")
             else:
-                print(f"Image {image.name} is under 1MB, no resizing needed")
+                print(f"📷 CKEDITOR Image {image.name} is under 1MB, no resizing needed")
         except Exception as e:
             if os.path.exists(img_path):
                 os.remove(img_path)
