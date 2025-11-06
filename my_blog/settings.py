@@ -33,8 +33,8 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/greenblog/'
+LOGOUT_REDIRECT_URL = '/greenblog/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -88,7 +88,7 @@ CKEDITOR_CONFIGS = {
         'height': 500,       # pixels (adjust as you wish)
         'width': 'full',     # full width of the container
         'extraPlugins': 'image2',  # Image plugin should be included
-        'filebrowserUploadUrl': '/ckeditor/upload/',
+        'filebrowserUploadUrl': '/greenblog/ckeditor/upload/',
         'image2_alignClasses': ['align-center'],
         'image2_maxHeight': 600,
         'contentsCss': [

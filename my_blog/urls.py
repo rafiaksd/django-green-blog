@@ -7,13 +7,15 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-SECRET_ADMIN_PATH= os.getenv('SECRET_ADMIN_PATH')
+SECRET_ADMIN_PATH = os.getenv('SECRET_ADMIN_PATH')
 
 urlpatterns = [
-    path(f'{SECRET_ADMIN_PATH}/admin/', admin.site.urls),
-    path('', include('blog.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  # login/logout
-    path('accounts/', include('blog.user_urls')),            # signup
+    path('greenblog/', include([
+        path(f'{SECRET_ADMIN_PATH}/admin/', admin.site.urls),
+        path('', include('blog.urls')),  # your blog URLs now under /greenblog/
+        path('accounts/', include('django.contrib.auth.urls')),
+        path('accounts/', include('blog.user_urls')),
+    ])),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
