@@ -70,3 +70,6 @@ admin.site.register(Comment)
 admin.site.site_header = "Client Blog Dashboard"
 admin.site.site_title = "Blog Admin"
 admin.site.index_title = "Manage Blog Content"
+
+# forces the "View site" link to /greenblog/
+admin.site.site_url = '/greenblog/'
