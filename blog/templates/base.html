@@ -48,7 +48,8 @@
         }
 
         article .blog_title{
-            font-size: 3.5em;
+            font-size: 2em;
+            margin-bottom: 1.2em;
         }
 
         body {
@@ -102,12 +103,6 @@
             line-height: 1.4; /* Improved line spacing */
         }
 
-        @media (min-width: 768px) {
-            .prose p {
-                font-size: 1.35em;
-            }
-        }
-
         .prose div {
             font-size: 1.35em;
         }
@@ -132,9 +127,20 @@
         }
 
         .marker {
-        background-color: yellow;
-        padding: 0 3px;
-    }
+            background-color: yellow;
+            padding: 0 3px;
+        }
+
+        @media (min-width: 768px) {
+            .prose p {
+                font-size: 1.35em;
+            }
+
+            article .blog_title{
+                font-size: 3.2em;
+                margin-bottom: 1em;
+            }
+        }
         
     </style>
 

@@ -11,10 +11,11 @@ URL_PATH = os.getenv('URL_PATH')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', URL_PATH]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.100', URL_PATH]
 
 CSRF_TRUSTED_ORIGINS = [
-    f'https://{URL_PATH}'
+    f'https://{URL_PATH}',
+    f'http://192.168.0.100'
 ]
 
 
@@ -80,9 +81,6 @@ TIME_ZONE = 'Asia/Dhaka'
 USE_I18N = True
 USE_TZ = True
 
-
-STATIC_URL = 'static/'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CKEDITOR_CONFIGS = {
@@ -99,5 +97,9 @@ CKEDITOR_CONFIGS = {
     },
 }
 
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
