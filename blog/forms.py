@@ -20,7 +20,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
     def clean_username(self):
-        username = self.cleaned_data.get('username')
+        username = self.cleaned_data['username'].lower() # force lowercase
         if User.objects.filter(username=username).exists():
             raise ValidationError("Username already exists")
         return username
