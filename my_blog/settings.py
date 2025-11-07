@@ -11,11 +11,13 @@ URL_PATH = os.getenv('URL_PATH')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.100', URL_PATH]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.100', 'staticshadow.webhop.me', '172.31.144.1', 'bore.pub', URL_PATH]
 
 CSRF_TRUSTED_ORIGINS = [
-    f'https://{URL_PATH}',
-    f'http://192.168.0.100'
+    f'http://{URL_PATH}',
+    f'http://staticshadow.webhop.me',
+    f'http://192.168.0.100',
+    f'http://bore.pub',
 ]
 
 
@@ -59,6 +61,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                # custom context processors here
+                'blog.context_processors.current_time',
             ],
         },
     },

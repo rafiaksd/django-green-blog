@@ -1,4 +1,4 @@
-**.pyc
+**/*.pyc
 **actual_pfp.jpg
 **.env
 /static/
