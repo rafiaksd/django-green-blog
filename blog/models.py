@@ -79,6 +79,7 @@ class BlogPost(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    publish = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -144,7 +145,7 @@ class BlogPost(models.Model):
             print(f"FAILED to RESIZE BLOG IMAGE: {img_path}, reason: {e}")
 
     def get_absolute_url(self):
-        return reverse('blog_detail', kwargs={'slug': self.slug})
+        return reverse('blog_detail', kwargs={'id': self.id, 'slug': self.slug})
     
     def __str__(self):
         return self.title

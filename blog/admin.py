@@ -20,16 +20,16 @@ class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = '__all__'
-        exclude = ['author'] #inteded author for now is ONLY ONE, so IGNORING FOR NOW
-        #exclude = ['slug']
+        exclude = ['author','slug']
+        # exclude = ['slug']
 
 # BlogPostAdmin with the custom BlogPostForm
 class BlogPostAdmin(admin.ModelAdmin):
     inlines = [CommentInline]
     form = BlogPostForm
-    list_display = ('title', 'category', 'created_at', 'updated_at')
+    list_display = ('title', 'category', 'publish', 'created_at', 'updated_at')
     search_fields = ('title', 'content')
-    list_filter = ('category', 'tags')
+    list_filter = ('category', 'tags', 'publish')
     #readonly_fields = ('slug',)  # Make slug field read-only
 
     actions = ['delete_unused_images']

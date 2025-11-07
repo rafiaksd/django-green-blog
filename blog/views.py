@@ -55,7 +55,7 @@ def upload_ckeditor_image(request):
     return JsonResponse({'uploaded': 0, 'error': {'message': 'Image upload failed'}})
 
 def blog_list(request):
-    posts = BlogPost.objects.all().order_by('-created_at')
+    posts = BlogPost.objects.filter(publish=True).order_by('-created_at')
 
     paginator = Paginator(posts, 6)  # 6 posts per page
     page_number = request.GET.get('page')
@@ -70,10 +70,14 @@ def blog_list(request):
         'tags': tags,
     })
 
-def blog_detail(request, slug):
-    blog_post = get_object_or_404(BlogPost, slug=slug)
+def blog_detail(request, id, slug=None):
+    blog_post = get_object_or_404(BlogPost, id=id, publish=True)
     comments = blog_post.comments.all().order_by('-created_at')
 
+    # if slug is outdated, redirect to canonical URL
+    if slug != blog_post.slug:
+        return redirect(blog_post.get_absolute_url(), permanent=True)
+    
     if request.method == 'POST':
         if request.user.is_authenticated:
             form = CommentForm(request.POST)
@@ -82,7 +86,7 @@ def blog_detail(request, slug):
                 comment.post = blog_post
                 comment.user = request.user
                 comment.save()
-                return redirect('blog_detail', slug=slug)
+                return redirect(blog_post.get_absolute_url())
         else:
             return redirect('login')
     else:
@@ -114,7 +118,7 @@ def category_posts(request, slug=None):
 
     if slug and not deselect:
         selected_category = get_object_or_404(Category, slug=slug)
-        posts = BlogPost.objects.filter(category=selected_category).order_by('-created_at')
+        posts = BlogPost.objects.filter(publish=True,category=selected_category).order_by('-created_at')
     else:
         posts = BlogPost.objects.all().order_by('-created_at')
 
@@ -139,7 +143,7 @@ def tag_posts(request, slug=None):
 
     if slug and not deselect:
         selected_tag = get_object_or_404(Tag, slug=slug)
-        posts = BlogPost.objects.filter(tags=selected_tag).order_by('-created_at')
+        posts = BlogPost.objects.filter(publish=True, tags=selected_tag).order_by('-created_at')
     else:
         posts = BlogPost.objects.all().order_by('-created_at')
 
@@ -158,7 +162,7 @@ def search_posts(request):
     query = request.GET.get('q')
     posts = BlogPost.objects.filter(
         Q(title__icontains=query) | Q(content__icontains=query)
-    ).order_by('-created_at')
+    ).filter(publish=True).order_by('-created_at')
 
     paginator = Paginator(posts, 6)
     page_number = request.GET.get('page')

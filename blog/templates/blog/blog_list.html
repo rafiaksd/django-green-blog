@@ -173,7 +173,7 @@
       <div class="neo-card bg-white p-4 md:p-6 rounded-lg flex flex-col xl:flex-row {% if forloop.counter|divisibleby:2 %}xl:flex-row-reverse{% endif %} items-center gap-6">
         {% if post.image %}
           <div class="">
-            <a href="{% url 'blog_detail' post.slug %}">
+            <a href="{% url 'blog_detail' post.id post.slug %}">
               <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
             </a>
           </div>
@@ -181,7 +181,7 @@
 
         <div class="flex-1 text-left">
           <h2 class="text-2xl md:text-5xl font-bold -mt-4 md:mt-0 md:mb-2 text-black">
-            <a href="{% url 'blog_detail' post.slug %}" class="hover:underline">{{ post.title }}</a>
+            <a href="{% url 'blog_detail' post.id post.slug %}" class="hover:underline">{{ post.title }}</a>
           </h2>
           <p class="text-sm md:text-lg text-gray-500 font-bold">{{ post.created_at|date:"F j, Y" }}</p>
           
@@ -195,7 +195,7 @@
           {% endif %}
           
           <p class="text-gray-700 text-md md:text-xl line-clamp-6 md:line-clamp-8 mb-4">{{ post.content|striptags|truncatewords:100|safe }}</p>
-          <a href="{% url 'blog_detail' post.slug %}"
+          <a href="{% url 'blog_detail' post.id post.slug %}"
              class="inline-block px-4 py-2 bg-treegreen border-2 border-black text-black font-medium hover:bg-black hover:text-treegreen transition">
             Read More
           </a>
