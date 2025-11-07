@@ -8,10 +8,12 @@ import os
 
 load_dotenv()
 SECRET_ADMIN_PATH = os.getenv('SECRET_ADMIN_PATH')
+# Conditionally build the admin path
+admin_path = f'{SECRET_ADMIN_PATH}/admin/' if SECRET_ADMIN_PATH else 'admin/'
 
 urlpatterns = [
     path('greenblog/', include([
-        path(f'{SECRET_ADMIN_PATH}/admin/', admin.site.urls),
+        path(admin_path, admin.site.urls),
         path('', include('blog.urls')),  # your blog URLs now under /greenblog/
         path('accounts/', include('django.contrib.auth.urls')),
         path('accounts/', include('blog.user_urls')),
