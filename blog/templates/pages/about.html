@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="bg-treegreen py-16 rounded-4xl container-shadow">
-     <style>
+<style>
      .container-shadow {
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* X-offset, Y-offset, blur, color */
           border-radius: 2rem; /* optional, to round the shadow corners */
@@ -20,12 +20,28 @@
      }
 
      .profile-text{
-          font-size:1.8rem;
           font-weight: 400;
      }
 
-     </style>
-    <div class="max-w-7xl mx-auto px-6">
+     .hobbies li{
+        font-size: 1.35em;
+        background-color: rgba(5, 134, 26, 0.753);
+        padding: 10px;
+        border-radius: 10px;
+        border-top: 1px;
+        border-left: 1px;
+        border-width: 1px;
+     }
+
+     @media (min-width: 768px) {
+        .hobbies li{
+            font-size: 1.95em;
+        }
+    }
+
+</style>
+
+<div class="max-w-7xl mx-auto px-6">
     <!-- Section Title -->
     <h1 class="shadow-text text-4xl sm:text-5xl md:text-6xl text-center font-extrabold text-white mb-8">
         Hello, I'm Jillur Rahman
@@ -34,28 +50,28 @@
     <!-- Profile Section -->
     <div class="flex flex-col lg:flex-row items-center gap-10">
         <!-- Profile Picture -->
-        <div class="w-full sm:max-w-1/2 flex-grow">
+        <div class="w-full lg:max-w-1/2 flex-grow">
             <img src="{% static 'images/camera_shot.png' %}" alt="Profile Image" class="w-full h-auto border-4 border-white shadow-lg" style="border-radius: 15px;">
         </div>
 
         <!-- Profile Text -->
-        <div class="profile-text w-full md:w-2/3 text-white mt-6 md:mt-0">
-            <p class="leading-relaxed mb-4">
+        <div class="profile-text text-xl md:text-3xl w-full md:w-4/5 text-white md:mt-0">
+            <div class="leading-relaxed mb-4">
                 I'm a passionate researcher and nature enthusiast with a deep love for birds, plants, and especially fruits like jackfruit and litchi. I enjoy exploring the wonders of agriculture while observing the beauty of the natural world.
-            </p>
-            <p class="leading-relaxed mb-6">
+            </div>
+            <div class="leading-relaxed mb-6">
                 Beyond my work as a Senior Officer at BARI (Bangladesh Agricultural Research & Institute), I dedicate time to reading and writing, sharing knowledge and stories that celebrate the richness of nature and agricultural science.
-            </p>
+            </div>
         </div>
     </div>
 
     <!-- Hobbies Section -->
-    <div class="mt-16">
+    <div class="hobbies mt-4">
         <h2 class="shadow-text text-3xl sm:text-4xl md:text-5xl text-white font-bold text-center mb-6">Hobbies</h2>
         <ul class="shadow-text flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 text-white hobbies-list">
             <li>Fruits</li>
             <li>Birds</li>
-            <li>Writing</li>
+            <li>Hobby 3</li>
             <li>Hobby 4</li>
         </ul>
     </div>
