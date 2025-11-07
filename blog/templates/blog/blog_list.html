@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Blog{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Explore the latest agricultural blogs, insights, and farming tips on AgriWhispers.">
+  <meta property="og:title" content="AgriWhispers Blog">
+  <meta property="og:description" content="Explore the latest agricultural blogs, insights, and farming tips on AgriWhispers.">
+  <meta property="og:image" content="{% static 'images/pg_icon.jpg' %}">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <meta property="og:type" content="website">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+  <!-- Pagination SEO -->
+  {% if page_obj.has_previous %}
+  <link rel="prev" href="?page={{ page_obj.previous_page_number }}">
+  {% endif %}
+  {% if page_obj.has_next %}
+  <link rel="next" href="?page={{ page_obj.next_page_number }}">
+  {% endif %}
+{% endblock %}
+
+
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">

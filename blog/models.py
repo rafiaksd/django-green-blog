@@ -74,6 +74,9 @@ class BlogPost(models.Model):
     slug = models.SlugField(unique=True, blank=True, max_length=255)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, related_name='posts')
     tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
+
+    
+
     content = RichTextField()
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)

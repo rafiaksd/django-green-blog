@@ -4,21 +4,63 @@
 {% block title %}{{ blog_post.title }}{% endblock %}
 
 {% block meta %}
-  <meta name="description" content="{{ blog_post.content|truncatewords:30 }}">
-  
-  <meta property="og:title" content="{{ blog_post.title }}">
-  
-  <!-- Open Graph Description: Truncated content -->
-  <meta property="og:description" content="{{ blog_post.content|truncatewords:30 }}">
-  
-  <!-- Open Graph Image -->
-  {% if blog_post.image %}
-    <meta property="og:image" content="{{ blog_post.image.url }}">
-  {% endif %}
-  
-  <!-- Open Graph URL -->
-  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta name="description" content="{{ blog_post.meta_description|default:blog_post.content|truncatewords:30 }}">
+<meta property="og:title" content="{{ blog_post.title }}">
+<meta property="og:description" content="{{ blog_post.meta_description|default:blog_post.content|truncatewords:30 }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="article">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ blog_post.title }}">
+<meta name="twitter:description" content="{{ blog_post.meta_description|default:blog_post.content|truncatewords:30 }}">
+
+<!-- IMAGE -->
+ {% if blog_post.image %}
+<meta property="og:image" content="{{ blog_post.image.url }}">
+<meta name="twitter:image" content="{{ blog_post.image.url }}">
+{% else %}
+<meta property="og:image" content="{% static 'images/pg_icon.jpg' %}">
+<meta name="twitter:image" content="{% static 'images/pg_icon.jpg' %}">
+{% endif %}
+
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+<!-- Structured Data JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ blog_post.title }}",
+  "image": [
+    {% if blog_post.image %}
+      "{{ blog_post.image.url }}"
+    {% else %}
+      "{% static 'images/pg_icon.jpg' %}"
+    {% endif %}
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "{{ blog_post.author.username }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AgriWhispers",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{% static 'images/pg_icon.jpg' %}"
+    }
+  },
+  "datePublished": "{{ blog_post.created_at|date:'Y-m-d' }}",
+  "dateModified": "{{ blog_post.updated_at|date:'Y-m-d' }}",
+  "description": "{{ blog_post.meta_description|default:blog_post.content|truncatewords:50 }}"
+}
+</script>
+
 {% endblock %}
+
 
 {% block content %}
 
@@ -90,23 +132,25 @@
   <p class="mt-2 text-md md:text-lg">{{ comment.content }}</p>
 
   {% if user == comment.user %}
-  <div class="mt-2 flex gap-x-4">
-    <!-- Edit Button -->
-    <button class="w-44 md:p-2 font-semibold text-white bg-blue-500 rounded-sm"
-            onclick="document.getElementById('edit-comment-{{ comment.pk }}').classList.toggle('hidden'); document.getElementById('delete-confirm-{{ comment.pk }}').classList.add('hidden');">
-      Edit
-    </button>
+<div class="mt-2 flex justify-end gap-2">
+  <!-- Edit Button -->
+  <button class="px-4 py-1 text-sm md:text-md font-medium text-white bg-blue-500 rounded hover:bg-blue-600 transition"
+          onclick="document.getElementById('edit-comment-{{ comment.pk }}').classList.toggle('hidden'); document.getElementById('delete-confirm-{{ comment.pk }}').classList.add('hidden');">
+    Edit
+  </button>
 
-    <!-- Delete Button + Inline Confirmation -->
-    <div class="flex flex-col">
-      <!-- Delete Button -->
-      <button type="button" 
-              class="w-24 p-2 font-semibold text-white bg-red-500 rounded-sm"
-              onclick="document.getElementById('delete-confirm-{{ comment.pk }}').classList.toggle('hidden'); document.getElementById('edit-comment-{{ comment.pk }}').classList.add('hidden');">
-        Delete
-      </button>
-    </div>
+  <!-- Delete Button + Inline Confirmation -->
+  <div class="flex flex-col">
+    <!-- Delete Button -->
+    <button type="button" 
+            class="px-2 py-1 text-sm md:text-md font-medium text-white bg-red-500 rounded hover:bg-red-600 transition"
+            onclick="document.getElementById('delete-confirm-{{ comment.pk }}').classList.toggle('hidden'); document.getElementById('edit-comment-{{ comment.pk }}').classList.add('hidden');">
+      Delete
+    </button>
   </div>
+</div>
+
+
 
   <!-- Inline Delete Confirmation -->
       <div id="delete-confirm-{{ comment.pk }}" class="hidden mt-2 flex flex-col gap-2">

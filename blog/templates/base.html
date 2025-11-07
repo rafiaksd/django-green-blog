@@ -152,9 +152,21 @@
     </style>
 
     {% block meta %}
-    <meta name="description" content="A Neo-Brutalist blog built with Django">
-    <meta property="og:title" content="My Blog">
-    <meta property="og:description" content="Fresh content, bold design.">
+        <meta name="description" content="Explore the latest agricultural blogs, insights, and farming tips on AgriWhispers.">
+        <meta property="og:title" content="AgriWhispers">
+        <meta property="og:description" content="Explore the latest agricultural blogs, insights, and farming tips on AgriWhispers.">
+        <meta property="og:image" content="{% static 'images/pg_icon.jpg' %}">
+        <meta property="og:url" content="{{ request.build_absolute_uri }}">
+        <meta property="og:type" content="website">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="AgriWhispers">
+        <meta name="twitter:description" content="Explore the latest agricultural blogs, insights, and farming tips on AgriWhispers.">
+        <meta name="twitter:image" content="{% static 'images/pg_icon.jpg' %}">
+
+        <!-- Canonical (can be overridden per page) -->
+        <link rel="canonical" href="{{ request.build_absolute_uri }}">
     {% endblock %}
 </head>
 <body class="bg-white text-black">
