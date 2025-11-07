@@ -75,7 +75,7 @@ class BlogPost(models.Model):
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, related_name='posts')
     tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
 
-    
+    description = models.TextField(blank=True, help_text="short blog description")
 
     content = RichTextField()
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)

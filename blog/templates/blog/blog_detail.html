@@ -4,16 +4,16 @@
 {% block title %}{{ blog_post.title }}{% endblock %}
 
 {% block meta %}
-<meta name="description" content="{{ blog_post.meta_description|default:blog_post.content|truncatewords:30 }}">
+<meta name="description" content="{{ blog_post.description|default:blog_post.content|truncatewords:30 }}">
 <meta property="og:title" content="{{ blog_post.title }}">
-<meta property="og:description" content="{{ blog_post.meta_description|default:blog_post.content|truncatewords:30 }}">
+<meta property="og:description" content="{{ blog_post.description|default:blog_post.content|truncatewords:30 }}">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
 <meta property="og:type" content="article">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ blog_post.title }}">
-<meta name="twitter:description" content="{{ blog_post.meta_description|default:blog_post.content|truncatewords:30 }}">
+<meta name="twitter:description" content="{{ blog_post.description|default:blog_post.content|truncatewords:30 }}">
 
 <!-- IMAGE -->
  {% if blog_post.image %}
@@ -55,7 +55,7 @@
   },
   "datePublished": "{{ blog_post.created_at|date:'Y-m-d' }}",
   "dateModified": "{{ blog_post.updated_at|date:'Y-m-d' }}",
-  "description": "{{ blog_post.meta_description|default:blog_post.content|truncatewords:50 }}"
+  "description": "{{ blog_post.description|default:blog_post.content|truncatewords:50 }}"
 }
 </script>
 
@@ -101,6 +101,10 @@
   {% endif %}
 
   <div class="prose prose-lg max-w-none">
+    {% if blog_post.description %}
+      <p>{{ blog_post.description }}</p>
+    {% endif %}
+
     {% autoescape off %} 
       {{ blog_post.content|safe }}
     {% endautoescape %}
