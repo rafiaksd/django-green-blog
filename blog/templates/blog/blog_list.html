@@ -191,7 +191,7 @@
   {% endif %}
 
   <!-- Blog Posts -->
-  <div class="flex flex-col gap-6 mt-2">
+  <div class="flex flex-col gap-6 mt-2 md:mt-3">
     {% for post in page_obj %}
       <div class="neo-card bg-white p-4 md:p-6 rounded-lg flex flex-col xl:flex-row {% if forloop.counter|divisibleby:2 %}xl:flex-row-reverse{% endif %} items-center gap-6">
         {% if post.image %}
