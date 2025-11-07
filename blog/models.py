@@ -69,7 +69,7 @@ def get_images_from_content(html_content):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, max_length=255)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, related_name='posts')
     tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
     content = RichTextField()
