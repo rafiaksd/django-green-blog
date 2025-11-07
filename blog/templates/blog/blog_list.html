@@ -73,7 +73,7 @@
   <!-- Blog Posts: Vertical Cards -->
   <div class="flex flex-col gap-10">
     {% for post in page_obj %}
-      <div class="neo-card bg-white p-6 rounded-lg flex flex-col xl:flex-row {% if forloop.counter|divisibleby:2 %}xl:flex-row-reverse{% endif %} items-center gap-6">
+      <div class="neo-card bg-white p-4 md:p-6 rounded-lg flex flex-col xl:flex-row {% if forloop.counter|divisibleby:2 %}xl:flex-row-reverse{% endif %} items-center gap-6">
         
         <!-- Image -->
         {% if post.image %}
@@ -84,12 +84,12 @@
 
         <!-- Text -->
         <div class="flex-1 text-left">
-          <h2 class="text-2xl md:text-5xl font-bold mb-2 text-black">{{ post.title }}</h2>
-          <p class="text-sm text-gray-500 mb-4 font-bold">{{ post.created_at|date:"F j, Y" }}</p>
+          <h2 class="text-2xl md:text-5xl font-bold -mt-4 md:mt-0 md:mb-2 text-black">{{ post.title }}</h2>
+          <p class="text-sm md:text-lg text-gray-500 font-bold">{{ post.created_at|date:"F j, Y" }}</p>
           
           <!-- Category with clickable link -->
           {% if post.category %}
-            <p class="text-sm text-gray-600 mb-2">
+            <p class="text-sm md:text-lg text-gray-600 mb-2">
               Category: 
               <a href="{% url 'category_posts' post.category.slug %}" class="text-treegreen hover:text-black font-semibold">
                 {{ post.category.name }}

@@ -32,13 +32,14 @@
   <h1 class="blog_title text-3xl md:text-4xl font-extrabold text-black">{{ blog_post.title }}</h1>
   <p class="text-lg text-gray-600 -mt-8 mb-4">
     Published on {{ blog_post.created_at|date:"F j, Y" }}
-    {% if blog_post.category %}
-      • In 
+  </p>
+
+  <p class="text-md text-gray-600 -mt-4 mb-2">{% if blog_post.category %}
+      <span class="italic text-xl">Category:</span> 
       <a href="{% url 'category_posts' blog_post.category.slug %}" class="text-treegreen text-xl font-bold hover:text-black">
         {{ blog_post.category.name }}
       </a>
-    {% endif %}
-  </p>
+    {% endif %}</p>
 
   {% if blog_post.tags.exists %}
     <div class="mb-6 flex flex-wrap gap-2">
