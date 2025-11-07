@@ -1,7 +1,9 @@
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.conf import settings
 from django import forms
-from .models import BlogPost, Category, Tag, Comment
+from .models import BlogPost, Category, Tag, Comment, get_images_from_content
 from ckeditor.widgets import CKEditorWidget
+import os
 
 class CommentInline(admin.TabularInline):
     model = Comment
@@ -30,7 +32,63 @@ class BlogPostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     list_filter = ('category', 'tags')
     #readonly_fields = ('slug',)  # Make slug field read-only
-    
+
+    actions = ['delete_unused_images']
+
+    def delete_unused_images(self, request, queryset):
+        deleted_images_count = 0
+        all_posts = BlogPost.objects.all()
+        used_images = set()
+        media_root = settings.MEDIA_ROOT
+
+        # --- Collect all used image paths ---
+        for post in all_posts:
+            # Main image (ImageField)
+            if post.image:
+                try:
+                    rel_path = os.path.relpath(post.image.path, media_root)
+                    used_images.add(rel_path.replace("\\", "/"))  # normalize slashes
+                except Exception as e:
+                    print(f"⚠️ Could not resolve main image path for {post.title}: {e}")
+
+            # CKEditor images (from content)
+            content_images = get_images_from_content(post.content)
+            for img in content_images:
+                # remove leading slash and normalize
+                clean_img = img.lstrip("/").replace("\\", "/")
+                used_images.add(clean_img)
+
+        print(f"🧩 Total used images detected: {len(used_images)}")
+        print(f"Sample used images: {list(used_images)[:5]}")
+
+        # --- Scan blog_images/ folder for unused files ---
+        blog_images_folder = os.path.join(media_root, "blog_images")
+        if not os.path.exists(blog_images_folder):
+            self.message_user(request, "❌ blog_images folder does not exist.", level=messages.ERROR)
+            return
+
+        for root, dirs, files in os.walk(blog_images_folder):
+            for file in files:
+                file_path = os.path.join(root, file)
+                rel_path = os.path.relpath(file_path, media_root).replace("\\", "/")
+
+                if rel_path not in used_images:
+                    try:
+                        os.remove(file_path)
+                        deleted_images_count += 1
+                        print(f"💀 Deleted unused image: {rel_path}")
+                    except Exception as e:
+                        print(f"⚠️ Failed to delete {rel_path}: {e}")
+                else:
+                    print(f"✅ Keeping in use: {rel_path}")
+
+        self.message_user(
+            request,
+            f"✅ Scan complete. Deleted {deleted_images_count} unused images.",
+            level=messages.SUCCESS
+        )
+
+    delete_unused_images.short_description = "Scan all blogs and delete unused images"
 
 # CategoryForm to prevent slug field from being edited
 class CategoryForm(forms.ModelForm):
