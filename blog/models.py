@@ -15,6 +15,8 @@ from urllib.parse import urlparse
 
 from PIL import Image
 
+from django.urls import reverse
+
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True, blank=True)
@@ -141,6 +143,8 @@ class BlogPost(models.Model):
         except Exception as e:
             print(f"FAILED to RESIZE BLOG IMAGE: {img_path}, reason: {e}")
 
+    def get_absolute_url(self):
+        return reverse('blog_detail', kwargs={'slug': self.slug})
     
     def __str__(self):
         return self.title

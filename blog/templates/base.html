@@ -127,6 +127,12 @@
             border-radius: 0.3rem;
         }
 
+        .round-img {
+            border-radius: 500px; /* makes it circular */
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),
+                        0 2px 4px -1px rgba(0,0,0,0.06); /* shadow-md */
+        }
+
         .marker {
             background-color: yellow;
             padding: 0 3px;
@@ -161,12 +167,12 @@
     <div class="flex justify-between items-center w-full max-h-[70px]">
       <!-- Profile Picture -->
        <div class="flex-grow max-w-[80px] md:max-w-[100px] object-cover">
-        <img src="{% static 'images/actual_pfp.jpg' %}" style="border-radius: 500px;" alt="Profile Picture">
+        <img src="{% static 'images/camera_shot.png' %}" class="round-img" style="border-radius: 10px;" alt="Profile Picture">
         </div>
 
       <!-- Title in Center -->
-      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-black text-center flex-grow">
-        My Blog Website
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-black text-center flex-grow">
+        AgriWhispers
       </h1>
 
       <!-- Hamburger Button (only visible on small screens) -->
@@ -253,7 +259,7 @@
 
     <!-- Footer -->
     <footer class="bg-black text-white text-center py-6 mt-16 border-t-4 border-treegreen pb-16">
-        <p>© {{ current_time.year }} My Blog. All rights reserved.</p>
+        <p>© {{ current_time.year }} AgriWhispers. All rights reserved.</p>
     </footer>
 </body>
 </html>

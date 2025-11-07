@@ -3,7 +3,10 @@ from .models import BlogPost, Category, Tag
 from .forms import CustomUserCreationForm
 from django.shortcuts import redirect
 
+from django.contrib.auth.decorators import login_required
+from .models import Comment
 from .forms import CommentForm
+from django.http import HttpResponseForbidden
 
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -173,3 +176,36 @@ def search_posts(request):
 
 def about(request):
     return render(request, 'pages/about.html')
+
+@login_required
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    # Only allow the comment owner to edit
+    if comment.user != request.user:
+        return HttpResponseForbidden("You are not allowed to edit this comment.")
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect(comment.post.get_absolute_url())  # redirect back to the blog post
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'blog/edit_comment.html', {'form': form})
+
+@login_required
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    # Only allow the comment owner to delete
+    if comment.user != request.user:
+        return HttpResponseForbidden("You are not allowed to delete this comment.")
+
+    if request.method == 'POST':
+        post_url = comment.post.get_absolute_url()
+        comment.delete()
+        return redirect(post_url)
+
+    return render(request, 'blog/delete_comment.html', {'comment': comment})

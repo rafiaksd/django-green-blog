@@ -1,5 +1,7 @@
 **/*.pyc
-**actual_pfp.jpg
 **.env
 /static/
 /staticfiles/
+
+**actual_pfp.jpg
+**camera_shot.png

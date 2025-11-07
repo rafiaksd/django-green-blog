@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container mx-auto px-4 py-8">
 
-  <h1 class="text-2xl md:text-3xl font-extrabold text-center -mt-8 mb-4 md:mb-6 uppercase">Blogs</h1>
+  <h1 class="text-2xl md:text-3xl font-extrabold text-center -mt-8 mb-4 md:mb-6">Blogs</h1>
 
  <!-- ==================== SEARCH + SHOW FILTERS ==================== -->
 <div class="relative max-w-4xl mx-auto">
@@ -152,23 +152,23 @@
   </style>
 </noscript>
 
-  <!-- =============== PAGINATION (MOVED OUTSIDE FILTER) =============== -->
+  <!-- =============== TOP PAGINATION (MOVED OUTSIDE FILTER) =============== -->
   {% if page_obj.has_other_pages %}
     <div class="flex text-xs md:text-lg justify-center my-6 md:my-8 space-x-2">
       {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}" 
-           class="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Prev</a>
+        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}" 
+          class="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Prev</a>
       {% endif %}
       <span class="px-4 py-2 border-2 border-black bg-treegreen text-black font-bold">{{ page_obj.number }}</span>
       {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}" 
-           class="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Next</a>
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}" 
+          class="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Next</a>
       {% endif %}
     </div>
   {% endif %}
 
   <!-- Blog Posts -->
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-6 mt-2">
     {% for post in page_obj %}
       <div class="neo-card bg-white p-4 md:p-6 rounded-lg flex flex-col xl:flex-row {% if forloop.counter|divisibleby:2 %}xl:flex-row-reverse{% endif %} items-center gap-6">
         {% if post.image %}
@@ -208,13 +208,13 @@
   {% if page_obj.has_other_pages %}
     <div class="flex justify-center mt-10 space-x-2">
       {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}" 
-           class="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Prev</a>
+        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}" 
+          class="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Prev</a>
       {% endif %}
       <span class="px-4 py-2 border-2 border-black bg-treegreen text-black font-bold">{{ page_obj.number }}</span>
       {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}" 
-           class="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Next</a>
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}" 
+          class="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-treegreen">Next</a>
       {% endif %}
     </div>
   {% endif %}
