@@ -19,6 +19,7 @@
     <style>
         :root {
             --treegreen: #45cc5a;
+            --darkblack: #142c96;
         }
         .user-name {
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
@@ -151,48 +152,99 @@
     {% endblock %}
 </head>
 <body class="bg-white text-black">
-        <!-- Navbar -->
-        <nav class="flex flex-col md:flex-row md:justify-between md:items-center p-2 md:p-4 bg-treegreen border-b-4 border-black">
-            <!-- Left -->
-            <h1 class="text-3xl md:text-4xl font-extrabold uppercase text-black text-center md:text-left mr-2 mb-0 md:mb-0">
-                My Blog Website
-            </h1>
+    <!-- =================== Navbar ==================================== -->
+        
+    <nav class="bg-treegreen border-b-4 border-black p-3 md:p-4">
+  <div class="flex flex-col md:flex-row md:justify-between md:items-center">
 
-            <!-- Right -->
-            <div class="text-xs md:text-lg grid grid-cols-2 gap-1 md:flex md:space-x-2 md:justify-end">
-                <a href="{% url 'blog_list' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
-                Blogs
-                </a>
+    <!-- Top Row (Profile + Title + Hamburger) -->
+    <div class="flex justify-between items-center w-full max-h-[70px]">
+      <!-- Profile Picture -->
+       <div class="flex-grow max-w-[80px] md:max-w-[100px] object-cover">
+        <img src="{% static 'images/actual_pfp.jpg' %}" style="border-radius: 500px;" alt="Profile Picture">
+        </div>
 
-                <a href="{% url 'about' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
-                About
-                </a>
+      <!-- Title in Center -->
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-black text-center flex-grow">
+        My Blog Website
+      </h1>
 
-                {% if user.is_authenticated %}
-                <span class="user-name font-xs text-black font-semibold text-center 
-                            truncate overflow-hidden md:whitespace-normal">
-                    {{ user.username }}
-                </span>
+      <!-- Hamburger Button (only visible on small screens) -->
+      <button id="menu-toggle"
+              class="md:hidden p-2 border-2 border-black rounded-lg bg-white ml-2">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="h-6 w-6 text-black"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor">
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
 
-                <form action="{% url 'logout' %}" method="post" class="inline min-w-[120px]">
-                    {% csrf_token %}
-                    <button type="submit" class="w-full md:w-auto px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition rounded-lg">
-                    Logout
-                    </button>
-                </form>
-                {% else %}
-                <a href="{% url 'login' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
-                    Login
-                </a>
+    <!-- Collapsible Menu -->
+    <div id="menu-content"
+         class="hidden flex-col md:flex md:flex-row md:items-center md:space-x-2 mt-3 md:mt-0 space-y-2 md:space-y-0">
 
-                <a href="{% url 'signup' %}" class="min-w-[120px] px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
-                    Sign Up
-                </a>
-                {% endif %}
-            </div>
-            </nav>
+      <a href="{% url 'blog_list' %}"
+         class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
+        Blogs
+      </a>
+
+      <a href="{% url 'about' %}"
+         class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
+        About
+      </a>
+
+      {% if user.is_superuser %}
+      <a href="{% url 'admin_panel' %}"
+         class="px-4 py-2 border-2 border-black bg-black text-white hover:bg-[#142c96] hover:text-treegreen transition text-center rounded-lg">
+        Admin
+      </a>
+      {% endif %}
+
+      {% if user.is_authenticated %}
+      <span class="text-black font-semibold text-center">
+        {{ user.username }}
+      </span>
+
+      <form action="{% url 'logout' %}" method="post" class="inline">
+        {% csrf_token %}
+        <button type="submit"
+                class="w-full md:w-auto px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition rounded-lg">
+          Logout
+        </button>
+      </form>
+      {% else %}
+      <a href="{% url 'login' %}"
+         class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
+        Login
+      </a>
+
+      
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- Toggle Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu-content');
+    toggleBtn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('flex');
+    });
+  });
+</script>
 
 
+
+    <!-- ================ END NAVBAR (UI + JavaScript) ================= -->
 
 
     <div class="container mx-auto p-2 md:p-6">

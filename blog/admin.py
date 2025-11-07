@@ -23,7 +23,6 @@ class BlogPostForm(forms.ModelForm):
         exclude = ['author'] #inteded author for now is ONLY ONE, so IGNORING FOR NOW
         #exclude = ['slug']
 
-
 # BlogPostAdmin with the custom BlogPostForm
 class BlogPostAdmin(admin.ModelAdmin):
     inlines = [CommentInline]
