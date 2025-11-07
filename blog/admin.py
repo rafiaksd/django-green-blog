@@ -4,6 +4,8 @@ from django import forms
 from .models import BlogPost, Category, Tag, Comment, get_images_from_content
 from ckeditor.widgets import CKEditorWidget
 import os
+from django.urls import path
+from django.shortcuts import redirect
 
 class CommentInline(admin.TabularInline):
     model = Comment
@@ -28,13 +30,19 @@ class BlogPostAdmin(admin.ModelAdmin):
     inlines = [CommentInline]
     form = BlogPostForm
     list_display = ('title', 'category', 'publish', 'created_at', 'updated_at')
-    search_fields = ('title', 'content')
+    list_editable = ('publish',)  # make publish editable right in the list
     list_filter = ('category', 'tags', 'publish')
+    search_fields = ('title', 'category__name', 'content')
     #readonly_fields = ('slug',)  # Make slug field read-only
 
-    actions = ['delete_unused_images']
-
-    def delete_unused_images(self, request, queryset):
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('delete-unused-images/', self.admin_site.admin_view(self.delete_unused_images_view), name='delete_unused_images'),
+        ]
+        return custom_urls + urls
+    
+    def delete_unused_images_view(self, request):
         deleted_images_count = 0
         all_posts = BlogPost.objects.all()
         used_images = set()
@@ -64,10 +72,12 @@ class BlogPostAdmin(admin.ModelAdmin):
         blog_images_folder = os.path.join(media_root, "blog_images")
         if not os.path.exists(blog_images_folder):
             self.message_user(request, "❌ blog_images folder does not exist.", level=messages.ERROR)
-            return
+            return redirect('..')
 
+        scanned_images = 0
         for root, dirs, files in os.walk(blog_images_folder):
             for file in files:
+                scanned_images += 1
                 file_path = os.path.join(root, file)
                 rel_path = os.path.relpath(file_path, media_root).replace("\\", "/")
 
@@ -80,14 +90,21 @@ class BlogPostAdmin(admin.ModelAdmin):
                         print(f"⚠️ Failed to delete {rel_path}: {e}")
                 else:
                     print(f"✅ Keeping in use: {rel_path}")
+                
 
         self.message_user(
             request,
-            f"✅ Scan complete. Deleted {deleted_images_count} unused images.",
+            f"✅ Scan complete. Scanned {scanned_images} images, Deleted {deleted_images_count} unused images.",
             level=messages.SUCCESS
         )
 
-    delete_unused_images.short_description = "Scan all blogs and delete unused images"
+        return redirect('..')
+    
+    def changelist_view(self, request, extra_context=None):
+        if extra_context is None:
+            extra_context = {}
+        extra_context['delete_unused_images_url'] = 'admin:delete_unused_images'
+        return super().changelist_view(request, extra_context=extra_context)
 
 # CategoryForm to prevent slug field from being edited
 class CategoryForm(forms.ModelForm):

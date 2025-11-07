@@ -1,0 +1,7 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools %}
+    {{ block.super }}
+    <a class="button" href="{% url 'admin:delete_unused_images' %}" 
+       style="margin-left: 10px;">Delete Unused Images</a>
+{% endblock %}
