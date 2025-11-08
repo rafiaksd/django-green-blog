@@ -140,23 +140,21 @@
   {% if user == comment.user %}
 <div class="mt-2 flex justify-end gap-2">
   <!-- Edit Button -->
-  <button class="px-4 py-1 text-sm md:text-md font-medium text-white bg-blue-500 rounded hover:bg-blue-600 transition"
+  <button class="px-4 py-1 text-md md:text-lg font-medium text-white bg-blue-500 rounded hover:bg-blue-600 transition"
           onclick="document.getElementById('edit-comment-{{ comment.pk }}').classList.toggle('hidden'); document.getElementById('delete-confirm-{{ comment.pk }}').classList.add('hidden');">
     Edit
   </button>
 
-  <!-- Delete Button + Inline Confirmation -->
+  <!-- Delete Button -->
   <div class="flex flex-col">
     <!-- Delete Button -->
     <button type="button" 
-            class="px-2 py-1 text-sm md:text-md font-medium text-white bg-red-500 rounded hover:bg-red-600 transition"
+            class="px-2 py-1 text-md md:text-lg font-medium text-white bg-red-500 rounded hover:bg-red-600 transition"
             onclick="document.getElementById('delete-confirm-{{ comment.pk }}').classList.toggle('hidden'); document.getElementById('edit-comment-{{ comment.pk }}').classList.add('hidden');">
       Delete
     </button>
   </div>
 </div>
-
-
 
   <!-- Inline Delete Confirmation -->
       <div id="delete-confirm-{{ comment.pk }}" class="hidden mt-2 flex flex-col gap-2">

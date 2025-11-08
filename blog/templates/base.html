@@ -237,6 +237,10 @@
         </button>
       </form>
       {% else %}
+      <a href="{% url 'signup' %}"
+         class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
+        Signup
+      </a>
       <a href="{% url 'login' %}"
          class="px-4 py-2 border-2 border-black bg-white text-black hover:bg-[#FFFF00] hover:text-treegreen transition text-center rounded-lg">
         Login

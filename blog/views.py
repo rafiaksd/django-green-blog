@@ -183,6 +183,7 @@ def about(request):
 
 def edit_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
+
     if request.user != comment.user:
         messages.error(request, "You can't edit this comment.")
         return redirect(comment.post.get_absolute_url())
@@ -190,7 +191,7 @@ def edit_comment(request, pk):
     if request.method == "POST":
         content = request.POST.get("content", "").strip()
         if content:
-            comment.content = content
+            comment.content = content + (" (edited)")
             comment.save()
             messages.success(request, "Comment updated.")
         return redirect(comment.post.get_absolute_url())
